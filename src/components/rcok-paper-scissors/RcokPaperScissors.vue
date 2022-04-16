@@ -92,8 +92,8 @@ export default {
 
     button {
       background: none;
-      border: medium solid var(--transparent-gray);
-      color: var(--transparent-gray);
+      border: medium solid var(--white);
+      color: var(--white);
       border-radius: 100px;
       width: max-content;
       padding: 5px 20px;

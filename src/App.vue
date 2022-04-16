@@ -94,6 +94,14 @@ span.md-18 { font-size: 18px; }
 span.md-24 { font-size: 24px; }
 span.md-36 { font-size: 36px; }
 span.md-48 { font-size: 48px; font-weight: bold; }
+
+@media screen and (max-width: 600px) {
+  #back-button {
+    top: unset;
+    bottom: 1rem;
+    left: 1rem;
+  }
+}
 </style>
 <script>
 </script>

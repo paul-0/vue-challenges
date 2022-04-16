@@ -65,6 +65,13 @@ export default {
   }
 }
 
+@media (max-width: 600px) {
+  #new-msg {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 textarea {
   resize: none;
   background-color: var(--blue);
