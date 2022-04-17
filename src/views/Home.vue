@@ -9,10 +9,10 @@
 
 <script>
 import $ from 'jquery';
-
 export default {
   name: 'HomeView',
   mounted() {
+    document.title = 'My Vuejs challenges';
     $("#back-button").fadeOut()
     $('a').click(function() {
       $("#back-button").fadeIn()

@@ -1,5 +1,5 @@
 <template>
-  <div id="app-root">
+  <div id="nft-root">
     <span class="material-icons-round icon left" @click="turnLeft">
       chevron_left
     </span>
@@ -14,16 +14,18 @@
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
     Coded by <a href="https://github.com/paul-0" target="_blank">Paul Devilliers</a>.
   </div>
+  <WhatIsIt v-if="showWhatIsIt" cookie="whatIsItNFT" :infos="infoWhatIsIt" />
 </template>
 
 <script>
 import $ from 'jquery'
 import CardComponent from "./CardComponent"
 import ImageViewer from "./ImageViewer";
+import WhatIsIt from "@/components/WhatIsIt";
 
 export default {
   name: 'NftComponent',
-  components: {ImageViewer, CardComponent},
+  components: {WhatIsIt, ImageViewer, CardComponent},
   data() {
     return {
       nfts: [],
@@ -31,7 +33,13 @@ export default {
       index: 0,
       img: {
         src: ''
-      }
+      },
+      showWhatIsIt: document.cookie.indexOf('whatIsItNFT') === -1,
+      infoWhatIsIt: [
+          "This is just a simple NFT Cards visualiser",
+          "There's two cards you can slide",
+          "And cool animations"
+      ]
     }
   },
   methods: {
@@ -76,6 +84,7 @@ export default {
     }
   },
   mounted() {
+    document.title = "My NFTs"
     this.nfts = require("@/assets/nfts.json")
     this.nftShow = this.nfts[0]
     $(".img-viewer").hide()
@@ -85,7 +94,7 @@ export default {
 
 <style lang="scss">
 
-#app-root {
+#nft-root {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +139,7 @@ span.icon {
 .img-viewer {
   z-index: 20;
 }
-.attribution {
+#nft-root .attribution {
   color: var(--white);
   font-size: 11px;
   text-align: center;
@@ -138,7 +147,7 @@ span.icon {
   bottom: 1rem;
   width: 100%;
 }
-.attribution a { color: hsl(228, 45%, 44%); }
+#nft-root .attribution a { color: hsl(228, 45%, 44%); }
 
 @media screen and (max-width: 620px), screen and (max-height: 600px) {
   span.icon {
@@ -152,7 +161,7 @@ span.icon {
     }
   }
 
-  #app-root {
+  #nft-root {
     #card {
       position: absolute;
       top: 3rem;

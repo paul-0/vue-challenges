@@ -20,21 +20,33 @@
       Coded by <a href="https://github.com/paul-0">Paul Devilliers</a>.
     </div>
   </div>
+  <WhatIsIt v-show="showWhatIsIt" cookie="whatIsItRCS" :infos="infosWhatIsIt" />
 </template>
 
 <script>
 import GameComponent from "./Game";
 import RulesComponent from "./Rules";
+import WhatIsIt from "@/components/WhatIsIt";
 export default {
   name: 'RcokPaperScissors',
   data() {
     return {
       score: parseInt(localStorage.getItem('score')) || 0,
       showRules: false,
-      modeClassic: true
+      modeClassic: true,
+      showWhatIsIt: document.cookie.indexOf('whatIsItRCS') === -1,
+      infosWhatIsIt: [
+          "This is a basic rock paper scissors game",
+          "\"The House\" makes random choices",
+          "If you win you get a point, if you loose you loose a point",
+          "Your score will be saved",
+          "The Sheldon version is the same but with a lizard and a Spock",
+          "You can check the rules by clicking on the RULES button",
+      ]
     }
   },
   components: {
+    WhatIsIt,
     RulesComponent,
     GameComponent
   },
@@ -45,10 +57,10 @@ export default {
     },
     changeMode() {
       this.modeClassic = !this.modeClassic;
-    },
-    changeLocale() {
-      this.$i18n.locale = this.$i18n.locale === 'en' ? 'fr' : 'en';
     }
+  },
+  mounted() {
+    document.title = 'Rock paper scissors game';
   }
 }
 </script>
@@ -158,11 +170,11 @@ export default {
     }
   }
 
-  #div-buttons {
+  #div-buttons-rps {
     margin: auto;
     position: static !important;
   }
-  .attribution {
+  #rps .attribution {
     margin: 0.7rem auto;
   }
 }

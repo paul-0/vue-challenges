@@ -2,13 +2,15 @@
   <div id="timeline">
     <TimestampComponent :timestamp="timestamps[0]" />
   </div>
-  <div id="not-finish"><h2>Under construction. 🚧</h2></div>
+  <WhatIsIt v-if="showWhatIsIt" cookie="whatIsItTimeline" :infos="infosWhatIsIt" />
 </template>
 
 <script>
 import TimestampComponent from "@/components/timeline/TimestampComponent";
+import WhatIsIt from "@/components/WhatIsIt";
 export default {
   name: "TimelineComponent",
+  components: {WhatIsIt, TimestampComponent},
   data() {
     return {
       timestamps: [
@@ -20,10 +22,16 @@ export default {
           x: 50,
           y: 50
         }
+      ],
+      showWhatIsIt: true, //document.cookie.indexOf("whatIsItTimeline") === -1,
+      infosWhatIsIt: [
+          "This is still under construction. 🚧"
       ]
     };
   },
-  components: {TimestampComponent}
+  mounted() {
+    document.title = "The Timeline"
+  }
 }
 </script>
 

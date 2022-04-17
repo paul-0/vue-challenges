@@ -7,18 +7,26 @@
   <NewMessage v-if="showNewMsgComponent" @close="showNewMsgComponent=false" @send="saveMsg" />
   <MessageComponent v-for="(msg,index) in listMessages" @delete="deleteMsg"
                     :key="msg.id" :index="index" :message="msg" :modify-msg="modifyMsg"/>
+  <WhatIsIt v-if="howItWorks" cookie="howItWorksMessagesBoard" :infos="infosHowItWorks" />
 </template>
 
 <script>
 import NewMessage from "@/components/messages-board/NewMessage";
 import MessageComponent from "@/components/messages-board/Message";
+import WhatIsIt from "@/components/WhatIsIt";
 export default {
   name: "MessagesBoard",
-  components: {MessageComponent, NewMessage},
+  components: {WhatIsIt, MessageComponent, NewMessage},
   data() {
     return {
       showNewMsgComponent: false,
-      listMessages: []
+      listMessages: [],
+      howItWorks: document.cookie.indexOf("howItWorksMessagesBoard") === -1,
+      infosHowItWorks: [
+        "You can add a message vie the plus button at the center.",
+        "You can move the messages on the board.",
+        "The messages and their positions will be saved."
+      ]
     }
   },
   methods: {
@@ -41,6 +49,7 @@ export default {
     }
   },
   mounted() {
+    document.title = 'Messages board';
     this.listMessages = JSON.parse(localStorage.getItem("listMessages")) || [];
   }
 }
