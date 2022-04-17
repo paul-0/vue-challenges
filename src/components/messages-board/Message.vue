@@ -1,5 +1,5 @@
 <template>
-  <div class="div-msg" @mousedown.prevent.left="handleMouseDown"
+  <div class="div-msg" @mousedown.prevent.left="handleMouseDown" @touchstart="handleTouch"
        :style="{left:x+'%', top:y+'%'}">
     <span class="material-icons-round btn" @click="$emit('delete',message.id)">
       delete
@@ -52,6 +52,27 @@ export default {
         this.modifyMsg(this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
       });
     },
+    handleTouch(evt) {
+      let startPosX = evt.targetTouches[0].clientX;
+      let startPosY = evt.targetTouches[0].clientY;
+      let newX = 0;
+      let newY = 0;
+
+      let touchMove = (event) => {
+        newX = ((startPosX - event.targetTouches[0].clientX) / window.innerWidth) * 100;
+        newY = ((startPosY - event.targetTouches[0].clientY) / window.innerHeight) * 100;
+        startPosX = event.targetTouches[0].clientX;
+        startPosY = event.targetTouches[0].clientY;
+        this.x = this.x - newX;
+        this.y = this.y - newY;
+      }
+
+      document.addEventListener("touchmove", touchMove);
+      document.addEventListener("touchend", () => {
+        document.removeEventListener("touchmove", touchMove);
+        this.modifyMsg(this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
+      });
+    }
   },
   mounted() {
     $(this.$el).animate({
