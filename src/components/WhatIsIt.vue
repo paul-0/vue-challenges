@@ -4,7 +4,7 @@
       <span class="material-icons-round md-24 btn" @click="close">
         close
       </span>
-      <h2>How it works</h2>
+      <h2>What is this?</h2>
       <ul>
         <li v-for="(info,index) in infos" :key="index">{{info}}</li>
       </ul>
@@ -64,6 +64,12 @@ export default {
     ul {
       font-size: x-large;
     }
+  }
+}
+@media screen and (max-width: 600px) {
+  .root > div {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 </style>
