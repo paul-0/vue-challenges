@@ -1,5 +1,5 @@
 <template>
-  <div class="div-msg" @mousedown.prevent.left="handleMouseDown" @touchstart="handleTouch"
+  <div :id="message.id" class="div-msg" @mousedown.prevent.left="handleMouseDown" @touchstart="handleTouch"
        :style="{left:x+'%', top:y+'%'}">
     <span class="material-icons-round btn" @click="$emit('delete',message.id)">
       delete
@@ -73,6 +73,7 @@ export default {
         this.modifyMsg(this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
       });
     }
+
   },
   mounted() {
     $(this.$el).animate({
@@ -81,6 +82,20 @@ export default {
     this.msg = this.message.msg;
     this.x = this.message.x;
     this.y = this.message.y;
+
+    let width = $(this.$el).width()
+    let height = $(this.$el).height()
+    $(this.$el).hover(() => {
+      $(this.$el).stop(true).animate({
+        width: width*1.2,
+        height: height*1.2
+      });
+    }, () => {
+      $(this.$el).stop(true).animate({
+        width: width,
+        height: height
+      });
+    });
   }
 }
 </script>
@@ -100,11 +115,13 @@ export default {
   max-width: 300px;
   max-height: 250px;
   overflow: hidden;
+  cursor: move;
+
   &:hover {
-    cursor: move;
     span.btn {
       opacity: 1;
     }
+
     animation: none;
   }
   p {

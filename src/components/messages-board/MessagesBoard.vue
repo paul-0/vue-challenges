@@ -1,13 +1,15 @@
 <template>
   <div>
-    <span class="material-icons-round md-48 btn" @click="showNewMsgComponent=true">
-      add
-    </span>
+    <div>
+      <span class="material-icons-round md-48 btn" @click="showNewMsgComponent=true">
+        add
+      </span>
+    </div>
+    <NewMessage v-if="showNewMsgComponent" @close="showNewMsgComponent=false" @send="saveMsg" />
+    <MessageComponent v-for="(msg) in listMessages" @delete="deleteMsg"
+                      :key="msg.id" :message="msg" :modify-msg="modifyMsg"/>
+    <WhatIsIt v-if="howItWorks" cookie="howItWorksMessagesBoard" :infos="infosHowItWorks" />
   </div>
-  <NewMessage v-if="showNewMsgComponent" @close="showNewMsgComponent=false" @send="saveMsg" />
-  <MessageComponent v-for="(msg,index) in listMessages" @delete="deleteMsg"
-                    :key="msg.id" :index="index" :message="msg" :modify-msg="modifyMsg"/>
-  <WhatIsIt v-if="howItWorks" cookie="howItWorksMessagesBoard" :infos="infosHowItWorks" />
 </template>
 
 <script>
@@ -40,8 +42,7 @@ export default {
       this.saveListMessages()
     },
     deleteMsg(index) {
-      console.log(index);
-      console.log(this.listMessages.splice(index, 1))
+      this.listMessages.splice(index, 1)
       this.saveListMessages()
     },
     saveListMessages() {
