@@ -1,7 +1,7 @@
 <template>
   <div :id="message.id" class="div-msg" @mousedown.prevent.left="handleMouseDown" @touchstart="handleTouch"
        :style="{left:x+'%', top:y+'%'}">
-    <span class="material-icons-round btn" @click="$emit('delete',message.id)">
+    <span class="material-icons-round btn" @click="$emit('delete',index)">
       delete
     </span>
     <p>{{ msg }}</p>
@@ -15,6 +15,7 @@ import message from "@/components/messages-board/Message"
 export default {
   name: "MessageComponent",
   props: {
+    index: Number,
     message: {
       id: Number,
       msg: String,
@@ -49,7 +50,7 @@ export default {
       document.addEventListener("mousemove", mouseMove);
       document.addEventListener("mouseup", () => {
         document.removeEventListener("mousemove", mouseMove);
-        this.modifyMsg(this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
+        this.modifyMsg(this.index, this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
       });
     },
     handleTouch(evt) {
@@ -70,7 +71,7 @@ export default {
       document.addEventListener("touchmove", touchMove);
       document.addEventListener("touchend", () => {
         document.removeEventListener("touchmove", touchMove);
-        this.modifyMsg(this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
+        this.modifyMsg(this.index, this.message, {id: message.id, msg:this.msg, x:this.x, y:this.y});
       });
     }
 
@@ -116,6 +117,9 @@ export default {
   max-height: 250px;
   overflow: hidden;
   cursor: move;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     span.btn {
